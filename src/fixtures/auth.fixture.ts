@@ -1,5 +1,5 @@
 import { test as pagesTest, expect } from "./pages.fixture";
-import { env } from "../config/EnvConfig";
+import { env } from '../config/env';
 
 type AuthFixtures = {
     authenticatedUserSession: void;

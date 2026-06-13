@@ -1,12 +1,9 @@
 import { expect, Locator, Page } from "@playwright/test";
 import {BasePage} from './BasePage';
-
-
+import { env } from '../config/env';
+import LoginData from '../testData/LoginData.json'
 
 class LoginPage extends BasePage {
-
-    static readonly url = '/playwright/ttacart/';
-    private readonly expectedUrl:string = 'https://app.thetestingacademy.com/playwright/ttacart/inventory';
 
     private readonly usernameInput: Locator;
     private readonly passwordInput: Locator;
@@ -24,7 +21,7 @@ class LoginPage extends BasePage {
     }
 
     async navigateToApplication(): Promise<void>  {
-        await this.navigateToTheApplication(LoginPage.url);
+        await this.navigateToTheApplication(env.baseURL);
     }
 
     async loginToApplication(username: string, password: string): Promise<void> {
@@ -35,7 +32,7 @@ class LoginPage extends BasePage {
     }
 
     async verifyLoginSuccessfullyWithValidCredentials(): Promise<void>  {
-           await this.locatorUtil.expectPageURL(this.expectedUrl);
+           await this.locatorUtil.expectPageURL(LoginData.validUser.expectedUrl);
     }
 
     async verifyErrorMessage(message: string): Promise<void> {

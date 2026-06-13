@@ -1,4 +1,6 @@
 import { test } from "../fixtures/pages.fixture";
+import LoginData from '../testData/LoginData.json'
+import { env } from '../config/env';
 
 test.describe("Login Functionality Tests", () => {
 
@@ -13,7 +15,7 @@ test.describe("Login Functionality Tests", () => {
             await loginPage.verifyLoginPageIsDisplayed();
         });
         await test.step("Enter valid username and password", async () => {
-            await loginPage.loginToApplication("standard_user", "tta_secret");
+            await loginPage.loginToApplication(env.username, env.password);
         });
         await test.step("Verify user is redirected to inventory page", async () => {
             await loginPage.verifyLoginSuccessfullyWithValidCredentials();
@@ -25,10 +27,10 @@ test.describe("Login Functionality Tests", () => {
             await loginPage.verifyLoginPageIsDisplayed();
         });
         await test.step("Enter invalid username and password", async () => {
-            await loginPage.loginToApplication("invalid_user", "wrong_password");
+            await loginPage.loginToApplication(LoginData.invalidUser.username, LoginData.invalidUser.password);
         });
         await test.step("Verify error message is displayed", async () => {
-            await loginPage.verifyErrorMessage("Username and password do not match");
+            await loginPage.verifyErrorMessage(LoginData.invalidUser.errorMessage);
         });
     });
 

@@ -1,37 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import * as dotenv from 'dotenv';
 
-dotenv.config();
-
-function resolveBaseURL(): string {
-  if (process.env.BASE_URL) {
-    return process.env.BASE_URL
-  }
-  else {
-    const env = (process.env.TTA_ENV || 'qa').toLowerCase();
-
-    switch (env) {
-      case 'dev':
-      case 'local':
-        return process.env.DEV_BASE_URL || 'http://localhost:3000';
-
-      case 'stg':
-      case 'stage':
-      case 'staging':
-        return process.env.STG_BASE_URL || 'https://stage.thetestingacademy.com';
-
-      case 'prod':
-      case 'production':
-        return process.env.PROD_BASE_URL || 'https://app.thetestingacademy.com';
-
-      case 'qa':6
-      default:
-        return process.env.QA_BASE_URL || 'https://app.thetestingacademy.com';
-    }
-
-
-  }
-}
 
 const isCI = !!process.env.CI
 
@@ -40,7 +8,8 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: isCI,
   retries: isCI ? 2 : 0,
-  workers: isCI ? 2 : undefined,
+  //workers: isCI ? 2 : undefined,
+  workers:2,
   reporter: [
     ['./src/utils/CustomReporter.ts'],
     ['html', { outputFolder: 'playwright-report' }],
@@ -50,7 +19,6 @@ export default defineConfig({
     ['list']
   ],
   use: {
-    baseURL: resolveBaseURL(),
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'retain-on-failure',

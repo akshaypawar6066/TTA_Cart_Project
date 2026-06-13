@@ -1,6 +1,6 @@
 import { test } from "../fixtures/pages.fixture";
 import { faker } from "@faker-js/faker";
-import {env} from "../config/EnvConfig";
+import { env } from "../config/env";
 
 test.describe("End to End Test", () => {
 
@@ -29,6 +29,6 @@ test.describe("End to End Test", () => {
         await page.waitForTimeout(3000);
         await checkoutCompletePage.clickOnBackHomeButton();
         await inventoryPage.verifyInventoryPageIsDisplayed();
-
+    
     });
 });
