@@ -29,7 +29,6 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@faker-js/faker": "^10.4.0",
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.2",
     "allure-commandline": "^2.42.1",
@@ -43,5 +42,8 @@
     "typescript": "^6.0.3",
     "winston": "^3.19.0",
     "xlsx": "^0.18.5"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1"
   }
 }
