@@ -1,0 +1,24 @@
+2026-06-13 12:26:07 [info] [LoginPage] Navigating to the application: https://app.thetestingacademy.com/playwright/ttacart/
+2026-06-13 12:26:08 [info] [LoginPage] Waiting for DOM content loaded
+2026-06-13 12:26:08 [info] [LoginPage] Waiting for page to fully load
+2026-06-13 12:26:08 [info] [LoginPage] Filling element: [Username Input] with value: standard_user
+2026-06-13 12:26:08 [info] [LoginPage] Filling element: [Password Input] with value: tta_secret
+2026-06-13 12:26:08 [info] [LoginPage] Clicking on element: [Login Button]
+2026-06-13 12:26:08 [info] [LoginPage] Waiting for DOM content loaded
+2026-06-13 12:26:08 [info] [LoginPage] Waiting for page to fully load
+2026-06-13 12:26:08 [info] [InventoryPage] Clicking on element: [Add to Cart Button]
+2026-06-13 12:26:08 [info] [InventoryPage] Clicking on element: [Cart Button]
+2026-06-13 12:26:09 [info] [InventoryPage] Waiting for DOM content loaded
+2026-06-13 12:26:09 [info] [InventoryPage] Waiting for page to fully load
+2026-06-13 12:26:09 [info] [CartPage] Clicking on element: [Checkout Button]
+2026-06-13 12:26:09 [info] [CartPage] Waiting for DOM content loaded
+2026-06-13 12:26:09 [info] [CartPage] Waiting for page to fully load
+2026-06-13 12:26:09 [info] [CheckoutStepOnePage] Filling element: [First Name Input] with value: Bethany
+2026-06-13 12:26:09 [info] [CheckoutStepOnePage] Filling element: [Last Name Input] with value: Feil
+2026-06-13 12:26:09 [info] [CheckoutStepOnePage] Filling element: [Postal Code Input] with value: 72485-1380
+2026-06-13 12:26:09 [info] [CheckoutStepOnePage] Clicking on element: [Continue Button]
+2026-06-13 12:26:10 [info] [CheckoutStepOnePage] Waiting for DOM content loaded
+2026-06-13 12:26:10 [info] [CheckoutStepOnePage] Waiting for page to fully load
+2026-06-13 12:26:10 [info] [CheckoutStepTwoPage] Asserting page URL is: https://app.thetestingacademy.com/playwright/ttacart/checkout-step-two
+2026-06-13 12:26:10 [info] [CheckoutStepTwoPage] Asserting page title is: TTACart - Checkout: Overview
+2026-06-13 12:26:10 [info] [CheckoutStepTwoPage] Asserting element: [Page Title] has text: Checkout: Overview

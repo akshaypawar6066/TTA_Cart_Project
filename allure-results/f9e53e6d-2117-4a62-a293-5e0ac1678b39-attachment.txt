@@ -1,0 +1,28 @@
+2026-06-13 17:03:50 [info] [LoginPage] Navigating to the application: /playwright/ttacart/
+2026-06-13 17:03:51 [info] [LoginPage] Waiting for DOM content loaded
+2026-06-13 17:03:51 [info] [LoginPage] Waiting for page to fully load
+2026-06-13 17:03:51 [info] [LoginPage] Filling element: [Username Input] with value: standard_user
+2026-06-13 17:03:51 [info] [LoginPage] Filling element: [Password Input] with value: tta_secret
+2026-06-13 17:03:52 [info] [LoginPage] Clicking on element: [Login Button]
+2026-06-13 17:03:53 [info] [LoginPage] Waiting for DOM content loaded
+2026-06-13 17:03:53 [info] [LoginPage] Waiting for page to fully load
+2026-06-13 17:03:53 [info] [LoginPage] Asserting page URL is: https://app.thetestingacademy.com/playwright/ttacart/inventory
+2026-06-13 17:03:53 [info] [InventoryPage] Clicking on element: [Add to Cart Button]
+2026-06-13 17:03:54 [info] [InventoryPage] Clicking on element: [Cart Button]
+2026-06-13 17:03:54 [info] [InventoryPage] Waiting for DOM content loaded
+2026-06-13 17:03:54 [info] [InventoryPage] Waiting for page to fully load
+2026-06-13 17:03:54 [info] [CartPage] Clicking on element: [Checkout Button]
+2026-06-13 17:03:54 [info] [CartPage] Waiting for DOM content loaded
+2026-06-13 17:03:54 [info] [CartPage] Waiting for page to fully load
+2026-06-13 17:03:54 [info] [CheckoutStepOnePage] Asserting page URL is: https://app.thetestingacademy.com/playwright/ttacart/checkout-step-one
+2026-06-13 17:03:55 [info] [CheckoutStepOnePage] Asserting page title is: TTACart - Checkout: Your Information
+2026-06-13 17:03:55 [info] [CheckoutStepOnePage] Asserting element: [Page Title] has text: Checkout: Your Information
+2026-06-13 17:03:55 [info] [CheckoutStepOnePage] Filling element: [First Name Input] with value: Solon
+2026-06-13 17:03:55 [info] [CheckoutStepOnePage] Filling element: [Last Name Input] with value: Walsh
+2026-06-13 17:03:55 [info] [CheckoutStepOnePage] Filling element: [Postal Code Input] with value: 72244
+2026-06-13 17:03:55 [info] [CheckoutStepOnePage] Clicking on element: [Continue Button]
+2026-06-13 17:03:56 [info] [CheckoutStepOnePage] Waiting for DOM content loaded
+2026-06-13 17:03:56 [info] [CheckoutStepOnePage] Waiting for page to fully load
+2026-06-13 17:03:56 [info] [CheckoutStepTwoPage] Asserting page URL is: https://app.thetestingacademy.com/playwright/ttacart/checkout-step-two
+2026-06-13 17:03:57 [info] [CheckoutStepTwoPage] Asserting page title is: TTACart - Checkout: Overview
+2026-06-13 17:03:57 [info] [CheckoutStepTwoPage] Asserting element: [Page Title] has text: Checkout: Overview

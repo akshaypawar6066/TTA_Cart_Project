@@ -1,0 +1,11 @@
+2026-06-12 19:39:46 [info] [LoginPage] Navigating to the application: https://app.thetestingacademy.com/playwright/ttacart/
+2026-06-12 19:39:47 [info] [LoginPage] Waiting for DOM content loaded
+2026-06-12 19:39:47 [info] [LoginPage] Waiting for page to fully load
+2026-06-12 19:39:47 [info] [LoginPage] Filling element with value: standard_user
+2026-06-12 19:39:47 [info] [LoginPage] Filling element with value: tta_secret
+2026-06-12 19:39:47 [info] [LoginPage] Clicking on element
+2026-06-12 19:39:47 [info] [LoginPage] Waiting for DOM content loaded
+2026-06-12 19:39:47 [info] [LoginPage] Waiting for page to fully load
+2026-06-12 19:39:47 [info] [InventoryPage] Waiting for 2000ms
+2026-06-12 19:39:49 [info] [InventoryPage] Getting count of matched elements
+2026-06-12 19:39:49 [info] [InventoryPage] Asserting element count is: 6

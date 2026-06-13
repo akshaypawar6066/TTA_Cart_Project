@@ -1,0 +1,10 @@
+2026-06-12 20:08:06 [info] [LoginPage] Navigating to the application: https://app.thetestingacademy.com/playwright/ttacart/
+2026-06-12 20:08:07 [info] [LoginPage] Waiting for DOM content loaded
+2026-06-12 20:08:07 [info] [LoginPage] Waiting for page to fully load
+2026-06-12 20:08:07 [info] [LoginPage] Filling element: [Username Input] with value: standard_user
+2026-06-12 20:08:07 [info] [LoginPage] Filling element: [Password Input] with value: tta_secret
+2026-06-12 20:08:07 [info] [LoginPage] Clicking on element: [Login Button]
+2026-06-12 20:08:07 [info] [LoginPage] Waiting for DOM content loaded
+2026-06-12 20:08:07 [info] [LoginPage] Waiting for page to fully load
+2026-06-12 20:08:07 [info] [InventoryPage] Asserting element: [Inventory Page Header] is visible
+2026-06-12 20:08:07 [info] [InventoryPage] Asserting page title is: TTACart - Products

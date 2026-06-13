@@ -1,0 +1,53 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: CheckoutStepOnePage.spec.ts >> Checkout Step One Page Tests >> Verify user is landed on checkout step one page
+- Location: src\tests\CheckoutStepOnePage.spec.ts:6:9
+
+# Error details
+
+```
+Error: page.goto: net::ERR_ABORTED at https://app.thetestingacademy.com/playwright/ttacart/
+Call log:
+  - navigating to "https://app.thetestingacademy.com/playwright/ttacart/", waiting until "load"
+
+```
+
+# Test source
+
+```ts
+  1  | import { Page } from "@playwright/test";
+  2  | import { LocatorUtil } from "../utils/LocatorUtil";
+  3  | import { createLogger, Logger } from "../utils/Logger";
+  4  | 
+  5  | 
+  6  | export abstract class BasePage {
+  7  | 
+  8  |     protected readonly page: Page;
+  9  |     protected readonly locatorUtil: LocatorUtil;
+  10 |     protected readonly logger: Logger;
+  11 | 
+  12 |     constructor(page: Page, scope: string) {
+  13 |         this.page = page;
+  14 |         this.logger = createLogger(scope);
+  15 |         this.locatorUtil = new LocatorUtil(page, this.logger);
+  16 | 
+  17 |     }
+  18 | 
+  19 |     protected async navigateToTheApplication(url: string): Promise<void> {
+  20 |         this.logger.info(`Navigating to the application: ${url}`);
+> 21 |         await this.page.goto(url);
+     |                         ^ Error: page.goto: net::ERR_ABORTED at https://app.thetestingacademy.com/playwright/ttacart/
+  22 |         await this.locatorUtil.waitForPageLoad();
+  23 | 
+  24 |     }
+  25 | }
+  26 | 
+  27 | 
+  28 | 
+```

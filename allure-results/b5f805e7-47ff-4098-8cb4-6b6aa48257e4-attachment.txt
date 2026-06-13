@@ -1,0 +1,20 @@
+2026-06-12 19:28:38 [info] [LoginPage] Navigating to the application: https://app.thetestingacademy.com/playwright/ttacart/
+2026-06-12 19:28:38 [info] [LoginPage] Waiting for DOM content loaded
+2026-06-12 19:28:38 [info] [LoginPage] Waiting for page to fully load
+2026-06-12 19:28:38 [info] [LoginPage] Filling element with value: standard_user
+2026-06-12 19:28:39 [info] [LoginPage] Filling element with value: tta_secret
+2026-06-12 19:28:39 [info] [LoginPage] Clicking on element
+2026-06-12 19:28:39 [info] [LoginPage] Waiting for DOM content loaded
+2026-06-12 19:28:39 [info] [LoginPage] Waiting for page to fully load
+2026-06-12 19:28:39 [info] [InventoryPage] Clicking on element
+2026-06-12 19:28:39 [info] [InventoryPage] Clicking on element
+2026-06-12 19:28:39 [info] [InventoryPage] Waiting for DOM content loaded
+2026-06-12 19:28:39 [info] [InventoryPage] Waiting for page to fully load
+2026-06-12 19:28:39 [info] [CartPage] Asserting page URL is: https://app.thetestingacademy.com/playwright/ttacart/cart
+2026-06-12 19:28:39 [info] [CartPage] Asserting page title is: TTACart - Your Cart
+2026-06-12 19:28:39 [info] [CartPage] Asserting element has text: Your Cart
+2026-06-12 19:28:39 [info] [CartPage] Asserting element contains text: TTA Practice Backpack
+2026-06-12 19:28:39 [info] [CartPage] Asserting element is visible
+2026-06-12 19:28:39 [info] [CartPage] Clicking on element
+2026-06-12 19:28:39 [info] [CartPage] Asserting element is visible
+2026-06-12 19:28:39 [info] [CartPage] Asserting element has text: Your cart is empty.

@@ -1,0 +1,16 @@
+2026-06-13 16:18:11 [info] [LoginPage] Navigating to the application: /playwright/ttacart/
+2026-06-13 16:18:12 [info] [LoginPage] Waiting for DOM content loaded
+2026-06-13 16:18:12 [info] [LoginPage] Waiting for page to fully load
+2026-06-13 16:18:12 [info] [LoginPage] Filling element: [Username Input] with value: standard_user
+2026-06-13 16:18:12 [info] [LoginPage] Filling element: [Password Input] with value: tta_secret
+2026-06-13 16:18:12 [info] [LoginPage] Clicking on element: [Login Button]
+2026-06-13 16:18:13 [info] [LoginPage] Waiting for DOM content loaded
+2026-06-13 16:18:13 [info] [LoginPage] Waiting for page to fully load
+2026-06-13 16:18:13 [info] [LoginPage] Asserting page URL is: https://app.thetestingacademy.com/playwright/ttacart/inventory
+2026-06-13 16:18:13 [info] [InventoryPage] Clicking on element: [Add to Cart Button]
+2026-06-13 16:18:13 [info] [InventoryPage] Clicking on element: [Cart Button]
+2026-06-13 16:18:13 [info] [InventoryPage] Waiting for DOM content loaded
+2026-06-13 16:18:13 [info] [InventoryPage] Waiting for page to fully load
+2026-06-13 16:18:13 [info] [CartPage] Clicking on element: [Remove Button]
+2026-06-13 16:18:13 [info] [CartPage] Asserting element: [Empty Cart Message] is visible
+2026-06-13 16:18:13 [info] [CartPage] Asserting element: [Empty Cart Message] has text: Your cart is empty.
