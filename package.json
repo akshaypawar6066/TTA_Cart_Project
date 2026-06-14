@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test",
+    "e2e": "npx playwright test src/tests/E2ETest.spec.ts",
+    "install:browsers": "npx playwright install",
+    "ci:all": "npm run install:browsers && npm run test",
+    "ci:e2e": "npm run install:browsers && npm run e2e",
     "test:headed": "npx playwright test --headed",
     "smoke": "npx playwright test --grep @smoke",
     "regression": "npx playwright test --grep @regression",
