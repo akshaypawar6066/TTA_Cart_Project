@@ -1,6 +1,6 @@
-import { test } from "../fixtures/pages.fixture";
-import LoginData from '../testData/LoginData.json'
-import { env } from '../config/env';
+import { test } from "../../fixtures/pages.fixture";
+import LoginData from '../../testData/ui/LoginData.json'
+import { env } from '../../config/env';
 
 test.describe("Login Functionality Tests", () => {
 

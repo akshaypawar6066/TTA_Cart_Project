@@ -1,4 +1,4 @@
-import { test } from "../fixtures/auth.fixture";
+import { test } from "../../fixtures/auth.fixture";
 
 test.describe("Cart Page Tests", () => {
 

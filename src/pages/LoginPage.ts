@@ -1,7 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
 import {BasePage} from './BasePage';
 import { env } from '../config/env';
-import LoginData from '../testData/LoginData.json'
+import LoginData from '../testData/ui/LoginData.json'
 
 class LoginPage extends BasePage {
 

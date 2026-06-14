@@ -1,9 +1,9 @@
-import { test } from "../fixtures/auth.fixture";
+import { test } from "../../fixtures/auth.fixture";
 import { faker } from "@faker-js/faker";
 
-test.describe("Checkout Step Two Page Tests", () => {
+test.describe("Checkout Complete Page Tests", {tag:"@EndToEndTest"}, () => {
 
-    test("Verify user is landed on checkout step two page", async ({ inventoryPage, cartPage, checkoutStepOnePage, checkoutStepTwoPage }) => {
+    test("Verify user is landed on checkout complete page after clicking on finish", async ({ inventoryPage, cartPage, checkoutStepOnePage, checkoutStepTwoPage, checkoutCompletePage }) => {
         await inventoryPage.addProductToCart("tta-practice-backpack");
         await inventoryPage.openCart();
         await cartPage.clickOnCheckoutButton();
@@ -15,9 +15,11 @@ test.describe("Checkout Step Two Page Tests", () => {
         );
         await checkoutStepOnePage.clickOnContinueButton();
         await checkoutStepTwoPage.verifyCheckoutStepTwoPageIsDisplayed();
+        await checkoutStepTwoPage.clickOnFinishButton();
+        await checkoutCompletePage.verifyCheckoutCompletePageIsDisplayed();
     });
 
-    test("Verify finish button is enabled on checkout page two", async ({ inventoryPage, cartPage, checkoutStepOnePage, checkoutStepTwoPage }) => {
+    test("Verify order status is completed or not on checkout complete page", async ({ inventoryPage, cartPage, checkoutStepOnePage, checkoutStepTwoPage, checkoutCompletePage }) => {
         await inventoryPage.addProductToCart("tta-practice-backpack");
         await inventoryPage.openCart();
         await cartPage.clickOnCheckoutButton();
@@ -29,12 +31,12 @@ test.describe("Checkout Step Two Page Tests", () => {
         );
         await checkoutStepOnePage.clickOnContinueButton();
         await checkoutStepTwoPage.verifyCheckoutStepTwoPageIsDisplayed();
-        await checkoutStepTwoPage.verifyFinishButtonIsEnabledOnCheckOutPageTwo();
-
+        await checkoutStepTwoPage.clickOnFinishButton();
+        await checkoutCompletePage.verifyCheckoutCompletePageIsDisplayed();
+        await checkoutCompletePage.verifyStatusOfTheOrderIsCompletedOrNot();
     });
 
-
-    test("Verify user can cancel checkout from step two and go back to cart", async ({ inventoryPage, cartPage, checkoutStepOnePage, checkoutStepTwoPage }) => {
+    test("Verify user can go back to inventory page from checkout complete page", async ({ inventoryPage, cartPage, checkoutStepOnePage, checkoutStepTwoPage, checkoutCompletePage }) => {
         await inventoryPage.addProductToCart("tta-practice-backpack");
         await inventoryPage.openCart();
         await cartPage.clickOnCheckoutButton();
@@ -46,8 +48,11 @@ test.describe("Checkout Step Two Page Tests", () => {
         );
         await checkoutStepOnePage.clickOnContinueButton();
         await checkoutStepTwoPage.verifyCheckoutStepTwoPageIsDisplayed();
-        await checkoutStepTwoPage.clickOnCancelButton();
-        await cartPage.verifyUserIsLandedOnCartPageOrNot();
+        await checkoutStepTwoPage.clickOnFinishButton();
+        await checkoutCompletePage.verifyCheckoutCompletePageIsDisplayed();
+        await checkoutCompletePage.verifyStatusOfTheOrderIsCompletedOrNot();
+        await checkoutCompletePage.clickOnBackHomeButton();
+        await inventoryPage.verifyInventoryPageIsDisplayed();
     });
 
 });

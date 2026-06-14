@@ -1,4 +1,4 @@
-import { test } from "../fixtures/auth.fixture";
+import { test } from "../../fixtures/auth.fixture";
 import { faker } from "@faker-js/faker";
 
 test.describe("Checkout Step One Page Tests", () => {

@@ -1,660 +1,900 @@
-# Advance Playwright Framework (1.x)
+# TTA Playwright Advanced Automation Framework
 
-> Production-grade Playwright + TypeScript automation framework built by [Pramod Dutta](https://thetestingacademy.com) for **The Testing Academy**.
+> **Production-Grade Test Automation Framework** built with **Playwright** and **TypeScript** for the **TTACart e-commerce application**.
 
 [![Playwright](https://img.shields.io/badge/Playwright-1.60-2EAD33?logo=playwright&logoColor=white)](https://playwright.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Node](https://img.shields.io/badge/Node-18+-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)](https://nodejs.org)
+[![npm](https://img.shields.io/badge/npm-9+-CB3837?logo=npm&logoColor=white)](https://www.npmjs.com)
 [![License](https://img.shields.io/badge/License-ISC-blue.svg)]()
 
-A complete, opinionated, batteries-included Playwright framework with **Page Object Model**, **fixtures**, **data-driven testing**, **multi-env config**, **Winston logging**, a **custom HTML reporter**, **Allure**, and **CI-ready scripts**.
+An enterprise-ready test automation framework featuring **Page Object Model (POM)**, **Fixture-based Architecture**, **Multi-layer Reporting**, **Winston Logging**, **Dynamic Test Data Management**, and **CI/CD Integration** with Jenkins & GitHub Actions.
 
 ---
 
-## Table of Contents
+## 📋 Table of Contents
 
-- [Features](#features)
-- [Folder Structure](#folder-structure)
-- [Quick Start](#quick-start)
-- [NPM Scripts](#npm-scripts)
-- [Path Aliases](#path-aliases)
-- [Environment Configuration](#environment-configuration)
-- [Test Tags & Filtering](#test-tags--filtering)
-- [Logging (Winston)](#logging-winston)
-- [Element Utilities (UtilElementLocator)](#element-utilities-utilelementlocator)
-- [Page Objects (BasePage)](#page-objects-basepage)
-- [Test Data Factory (Faker)](#test-data-factory-faker)
-- [Writing Tests — Steps + Logging](#writing-tests--steps--logging)
-- [Fixtures (Page Object injection)](#fixtures-page-object-injection)
-- [Per-Step Screenshots (visualStep)](#per-step-screenshots-visualstep)
-- [End-to-End Checkout Flow](#end-to-end-checkout-flow)
-- [Module System (CommonJS)](#module-system-commonjs)
+- [Overview](#overview)
+- [Tech Stack](#tech-stack)
+- [Key Features](#key-features)
+- [Project Structure](#project-structure)
+- [Architecture](#architecture)
+- [Setup & Installation](#setup--installation)
+- [Running Tests](#running-tests)
+- [Configuration](#configuration)
+- [Framework Components](#framework-components)
+- [Writing Tests](#writing-tests)
 - [Reporting](#reporting)
-- [Custom TTA Report — Visual Flow](#custom-tta-report--visual-flow)
-- [AI Agent Rules](#ai-agent-rules)
-- [Project Rules](#project-rules)
-- [Phase 1 Walkthrough](#phase-1-walkthrough)
+- [CI/CD Integration](#cicd-integration)
+- [Best Practices](#best-practices)
+- [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
-- [Author](#author)
 
 ---
 
-## Features
+## Overview
 
-- **Playwright Test runner** — parallel, retries, projects, trace viewer
-- **TypeScript strict mode** with path aliases (`@pages`, `@utils`, `@api`, …)
-- **Page Object Model** under `src/pages/`
-- **Custom Fixtures** under `src/fixtures/`
-- **API client layer** under `src/api/` (REST + GraphQL ready)
-- **Multi-env config** via `dotenv` — qa, stg, prod, dev
-- **Data-driven testing** — CSV (`csv-parse`), JSON, XLSX (`xlsx`)
-- **Test data factories** with `@faker-js/faker`
-- **Winston logger** with file + console + rotation
-- **Custom HTML Reporter** (`CustomReporter.ts`) — TTA-branded, real-time
-- **Allure** reporter integration
-- **Tag-based execution** — `@p0`, `@p1`, `@e2e`, `@smoke`, `@lor`
-- **Cross-browser** — Chromium, Firefox, WebKit, Mobile Chrome (Pixel 5)
-- **CI-aware config** — auto-tunes retries, workers, `forbidOnly`
-- **AI-agent rule files** for Claude Code, Copilot, Cursor, Windsurf, Augment, Antigravity, Aider, Codex, Jules
-- **ESLint + Prettier + tsc** quality gates enforced on every test change
-- **Docker-ready** (Dockerfile placeholder)
+This framework automates the **TTACart e-commerce application** with a focus on:
+
+- ✅ **Maintainability**: Clean POM pattern with inherited base functionality
+- ✅ **Scalability**: Modular architecture for easy feature expansion
+- ✅ **Reliability**: Built-in retry logic, proper wait strategies, comprehensive logging
+- ✅ **Reporting**: Custom branded reports with multi-layer reporting
+- ✅ **CI/CD Ready**: Seamless Jenkins and GitHub Actions integration
+- ✅ **Developer Experience**: Fixture injection, clear test structure, instant feedback
+
+### Application Under Test
+- **Name**: TTACart (E-commerce shopping & checkout platform)
+- **Base URL**: https://app.thetestingacademy.com/playwright/ttacart/
+- **User Flow**: Login → Browse Inventory → Add to Cart → Checkout (2-step) → Order Complete
 
 ---
 
-## Folder Structure
+## Tech Stack
+
+| Component | Technology | Version |
+|-----------|-----------|---------|
+| **Test Framework** | Playwright Test | 1.60.0 |
+| **Language** | TypeScript | 6.0.3 |
+| **Runtime** | Node.js | 18+ |
+| **Package Manager** | npm | 9+ |
+| **Logging** | Winston | 3.19.0 |
+| **Data Generation** | Faker.js | 8.4.1 |
+| **Reporting** | Custom TTA + Allure + Playwright HTML | Multi |
+| **CI/CD** | Jenkins + GitHub Actions | - |
+| **Module System** | CommonJS | Node16 resolution |
+| **Code Quality** | ESLint + Prettier + TypeScript | - |
+
+---
+
+## Key Features
+
+🎯 **Page Object Model (POM)**
+- Centralized locator management
+- Reusable page methods
+- Clean, readable test code
+
+🎯 **Base Class Architecture**
+- Common initialization (Logger, LocatorUtil)
+- Shared methods across all pages
+- Consistent naming conventions
+
+🎯 **LocatorUtil Wrapper**
+- Standardized element interactions
+- Built-in logging for every action
+- Flexible locator handling (string or Locator object)
+- Default timeouts and retry logic
+
+🎯 **Winston Logging**
+- Scoped child loggers per page/module
+- Console + file output (logs/combined.log)
+- Error-only logs (logs/error.log)
+- Structured timestamped format
+
+🎯 **Fixture-Based Testing**
+- Page objects injected directly into tests
+- Auto-login fixture for authenticated flows
+- Clean test code without boilerplate
+
+🎯 **Multi-Layer Reporting**
+- **Custom TTA Reporter** (branded HTML with real-time updates)
+- **Playwright HTML Report** (default reporter)
+- **Allure Reporting** (metrics & history)
+- **JUnit XML** (CI/CD integration)
+- **JSON Output** (programmatic access)
+
+🎯 **Data-Driven Testing**
+- JSON-based test data management
+- Faker.js for dynamic data generation
+- Environment-based configuration
+
+🎯 **CI/CD Ready**
+- Jenkins Pipeline integration
+- GitHub Actions workflows
+- Artifact publishing
+- Test result aggregation
+
+---
+
+## Project Structure
 
 ```
-AdvancePlaywrightFramework1x/
+AdvancePlaywrightFramework_TTACart/
+│
 ├── src/
-│   ├── api/                   # API clients (REST / GraphQL)
-│   ├── config/                # Env loaders + credentials accessor
-│   │   └── credentials.ts     # Login creds sourced from .env
-│   ├── fixtures/              # Playwright custom fixtures
-│   │   └── test-base.ts       # `test` extended with a fixture per Page Object
-│   ├── pages/                 # Page Object Model classes
-│   │   ├── BasePage.ts        # Abstract parent (page, el, log, goto)
-│   │   ├── LoginPage.ts
-│   │   ├── InventoryPage.ts
-│   │   ├── ItemDetailPage.ts
-│   │   ├── CartPage.ts
-│   │   ├── CheckoutStepOnePage.ts
-│   │   ├── CheckoutStepTwoPage.ts
-│   │   ├── CheckoutCompletePage.ts
-│   │   └── index.ts           # Barrel re-exports
-│   ├── testdata/              # CSV / JSON / XLSX test data
-│   ├── tests/                 # Spec files (*.spec.ts)
-│   │   ├── login.spec.ts
-│   │   └── e2e-checkout.spec.ts  # Full login→checkout→complete flow
-│   └── utils/                 # Helpers
-│       ├── logger.ts          # Winston logger (+ createLogger scope)
-│       ├── UtilElementLocator.ts  # Locator action wrapper (Flex type)
-│       ├── DataGenerator.ts   # Faker test-data factory
-│       ├── visualStep.ts      # test.step + per-step screenshot
-│       └── CustomReporter.ts  # TTA HTML reporter
+│   ├── api/                          # API client layer (future)
+│   │
+│   ├── config/
+│   │   ├── env.ts                    # Environment configuration loader
+│   │   ├── dev.env                   # Dev environment variables
+│   │   ├── qa.env                    # QA environment variables
+│   │   ├── stg.env                   # Staging environment variables
+│   │   └── prod.env                  # Production environment variables
+│   │
+│   ├── fixtures/
+│   │   ├── pages.fixture.ts          # Page object injection fixture
+│   │   └── auth.fixture.ts           # Auto-login fixture (extends pages)
+│   │
+│   ├── pages/                        # Page Object Model classes
+│   │   ├── BasePage.ts               # Abstract base class (logger, locatorUtil)
+│   │   ├── LoginPage.ts              # Login page actions
+│   │   ├── InventoryPage.ts          # Product listing page
+│   │   ├── CartPage.ts               # Shopping cart page
+│   │   ├── CheckoutStepOnePage.ts    # Checkout personal info form
+│   │   ├── CheckoutStepTwoPage.ts    # Checkout review page
+│   │   └── CheckoutCompletePage.ts   # Order confirmation page
+│   │
+│   ├── testData/
+│   │   └── LoginData.json            # Test credentials & expected values
+│   │
+│   ├── tests/                        # Test spec files (*.spec.ts)
+│   │   ├── LoginPage.spec.ts         # Login feature tests
+│   │   ├── InventoryPage.spec.ts     # Product management tests
+│   │   ├── CartPage.spec.ts          # Cart functionality tests
+│   │   ├── CheckoutStepOnePage.spec.ts  # Checkout step 1 tests
+│   │   ├── CheckoutStepTwoPage.spec.ts  # Checkout step 2 tests
+│   │   ├── CheckoutCompletePage.spec.ts # Order completion tests
+│   │   └── E2ETest.spec.ts           # Full end-to-end flow
+│   │
+│   └── utils/
+│       ├── Logger.ts                 # Winston logger configuration
+│       ├── LocatorUtil.ts            # Element interaction wrapper (FLEX type)
+│       ├── CustomReporter.ts         # Custom TTA HTML reporter
+│       └── DataGenerator.ts          # Faker-based test data factory
 │
-├── docs/
-│   ├── images/                # README screenshots
-│   ├── ttacart-pom-creator/   # Skill: live-page → Page Object generator
-│   └── phase1/
-│       └── prompts.md         # Phase 1 conversation log
-│
-├── rules/                     # Canonical project rules
-│   ├── README.md
-│   └── test-quality-checks.md
-│
-├── logs/                      # Winston log output (gitignored)
-├── allure-results/            # Allure raw results (gitignored)
-├── allure-report/             # Allure HTML (gitignored)
-├── playwright-report/         # Playwright HTML (gitignored)
-├── test-results/              # Playwright test artifacts (gitignored)
-├── tta-report/                # Custom TTA HTML reports (gitignored)
+├── logs/                             # Winston log output (gitignored)
+│   ├── combined.log                  # All logs
+│   └── error.log                     # Error logs only
 │
 ├── .github/
-│   ├── copilot-instructions.md
-│   └── workflows/             # GitHub Actions CI
+│   ├── workflows/
+│   │   └── playwright.yml            # GitHub Actions CI workflow
+│   └── copilot-instructions.md       # AI assistant guidelines
 │
-├── .claude/                   # Claude Code config (optional)
-├── .cursor/rules/             # Cursor MDC rules
-├── .windsurf/rules/           # Windsurf rules
-├── .augment/rules/            # Augment Code rules
+├── .augment/                         # Augment Code rules
+├── .vscode/                          # VS Code settings
+├── allure-results/                   # Allure report data (gitignored)
+├── allure-report/                    # Allure HTML report (gitignored)
+├── playwright-report/                # Playwright HTML report (gitignored)
+├── tta-report/                       # Custom TTA HTML report (gitignored)
+├── test-results/                     # Test artifacts (gitignored)
 │
-├── .cursorrules               # Cursor legacy
-├── .windsurfrules             # Windsurf legacy
-├── .augment-guidelines        # Augment legacy
-├── AGENTS.md                  # Antigravity / Codex / Aider / Jules
-├── CLAUDE.md                  # Claude Code project rules
+├── rules/                            # Project rules & conventions
+│   ├── README.md                     # Rules directory info
+│   └── test-quality-checks.md        # Quality check guidelines
 │
-├── .env                       # Local env (gitignored)
-├── .gitignore
-├── Dockerfile
-├── playwright.config.ts       # Playwright configuration
-├── tsconfig.json              # TypeScript config + path aliases
-├── package.json
-├── package-lock.json
-└── README.md
+├── playwright.config.ts              # Playwright test configuration
+├── tsconfig.json                     # TypeScript configuration
+├── package.json                      # Dependencies & npm scripts
+├── Jenkinsfile                       # Jenkins pipeline definition
+├── Dockerfile                        # Docker container setup
+├── .env                              # Environment variables (gitignored)
+├── .gitignore                        # Git ignore rules
+└── README.md                         # This file
 ```
 
 ---
 
-<img width="1920" height="1617" alt="image" src="https://github.com/user-attachments/assets/f7f108cb-29e7-4f57-98a8-4fe3eca5964c" />
+## Architecture
 
+### 1. Page Object Model (POM)
 
-## Quick Start
+Each page encapsulates:
+- **Locators**: Private Locator objects for page elements
+- **Methods**: Public async methods for page interactions
+- **Inheritance**: Extends `BasePage` for shared functionality
+
+```typescript
+export class LoginPage extends BasePage {
+    private readonly usernameInput: Locator;
+    private readonly passwordInput: Locator;
+    private readonly loginButton: Locator;
+
+    constructor(page: Page) {
+        super(page, "LoginPage");
+        this.usernameInput = page.locator("#user-name");
+        this.passwordInput = page.locator("#password");
+        this.loginButton = page.locator("#login-button");
+    }
+
+    async loginToApplication(username: string, password: string): Promise<void> {
+        await this.locatorUtil.fill(this.usernameInput, username, 'Username');
+        await this.locatorUtil.fill(this.passwordInput, password, 'Password');
+        await this.locatorUtil.click(this.loginButton, 'Login Button');
+        await this.locatorUtil.waitForPageLoad();
+    }
+}
+```
+
+### 2. Base Class Architecture
+
+`BasePage.ts` initializes:
+- **Logger**: Scoped Winston logger for the page class
+- **LocatorUtil**: Wrapper for all element interactions
+- **Page Object**: Playwright Page instance
+
+```typescript
+export abstract class BasePage {
+    protected readonly page: Page;
+    protected readonly locatorUtil: LocatorUtil;
+    protected readonly logger: Logger;
+
+    constructor(page: Page, scope: string) {
+        this.page = page;
+        this.logger = createLogger(scope);
+        this.locatorUtil = new LocatorUtil(page, this.logger);
+    }
+
+    protected async navigateToTheApplication(url: string): Promise<void> {
+        this.logger.info(`Navigating to: ${url}`);
+        await this.page.goto(url);
+        await this.locatorUtil.waitForPageLoad();
+    }
+}
+```
+
+### 3. LocatorUtil Wrapper (FLEX Type)
+
+Provides a standardized API for element interactions:
+- **Mouse Actions**: click, doubleClick, rightClick, hover, dragAndDrop
+- **Keyboard Actions**: pressKey, typeText
+- **Input Methods**: fill, clear, check, uncheck
+- **Select Operations**: selectByText, selectByValue, selectByIndex
+- **State Checks**: isVisible, isEnabled, isChecked, isHidden
+- **Wait Methods**: waitForVisible, waitForHidden, waitForPageLoad, waitForNetworkIdle
+- **Assertions**: expectVisible, expectText, expectValue, expectCount, etc.
+
+Every method includes:
+- Automatic logging
+- Default timeout handling (15000ms)
+- Element name annotation for clarity
+
+```typescript
+export type FLEX = Locator | string;
+
+export class LocatorUtil {
+    async click(locator: FLEX, elementName?: string): Promise<void> {
+        const element = this.resolveLocator(locator);
+        this.logger.info(`Clicking on element${elementName ? ': [' + elementName + ']' : ''}`);
+        await element.click({ timeout: DEFAULT_ACTION_TIMEOUT_MS });
+    }
+
+    private resolveLocator(locator: FLEX): Locator {
+        return typeof locator === 'string' ? this.page.locator(locator) : locator;
+    }
+}
+```
+
+### 4. Fixture Injection
+
+Tests receive page objects via fixture injection:
+
+```typescript
+// pages.fixture.ts
+export const test = base.extend<PageObjectFixtures>({
+    loginPage: async ({ page }, use) => {
+        await use(new LoginPage(page));
+    },
+    inventoryPage: async ({ page }, use) => {
+        await use(new InventoryPage(page));
+    },
+    // ... more fixtures
+});
+
+// tests use fixtures directly
+test('Login test', async ({ loginPage, inventoryPage }) => {
+    await loginPage.navigateToApplication();
+    await loginPage.loginToApplication('standard_user', 'tta_secret');
+    // ... 
+});
+```
+
+Auth fixture extends page fixtures and auto-logs in:
+
+```typescript
+// auth.fixture.ts
+export const test = pagesTest.extend<AuthFixtures>({
+    authenticatedUserSession: [
+        async ({ loginPage }, use) => {
+            await loginPage.navigateToApplication();
+            await loginPage.loginToApplication(env.username, env.password);
+            await loginPage.verifyLoginSuccessfullyWithValidCredentials();
+            await use();
+        },
+        { auto: true }
+    ]
+});
+```
+
+---
+
+## Setup & Installation
 
 ### Prerequisites
+- **Node.js** 18+ 
+- **npm** 9+
+- **Git**
 
-- Node.js **18+**
-- npm 9+
-- (Optional) Allure CLI: `brew install allure` / `scoop install allure`
-
-### Install
-
+### Step 1: Clone Repository
 ```bash
-git clone https://github.com/PramodDutta/AdvancePlaywrightFramework1x.git
-cd AdvancePlaywrightFramework1x
+git clone https://github.com/akshaypawar6066/TTA_Cart_Project.git
+cd AdvancePlaywrightFramework_TTACart
+```
+
+### Step 2: Install Dependencies
+```bash
 npm install
+```
+
+### Step 3: Install Playwright Browsers
+```bash
 npx playwright install --with-deps
 ```
 
-### Run tests
+### Step 4: Configure Environment
+Create environment files in `src/config/`:
 
+**src/config/qa.env**
 ```bash
-npm test                  # all tests, all projects
-npm run test:chromium     # chromium only
-npm run test:ui           # UI mode (debug-friendly)
-npm run test:p0           # smoke / critical only
+APP_URL=https://app.thetestingacademy.com/playwright/ttacart/
+APP_USERNAME=standard_user
+APP_PASSWORD=tta_secret
 ```
 
-### View report
-
+**src/config/.env** (for local development)
 ```bash
-npm run test:report       # Playwright HTML
-npm run test:allure       # Allure HTML
-# TTA custom report auto-generated at tta-report/index.html
+TEST_ENV=qa
+LOG_LEVEL=info
 ```
 
----
-
-## NPM Scripts
-
-| Script | Purpose |
-|--------|---------|
-| `test` | Run all tests, all projects |
-| `test:headed` | Run with browser visible |
-| `test:ui` | Playwright UI mode |
-| `test:chromium` / `test:firefox` / `test:webkit` | Per-browser run |
-| `test:debug` | Playwright Inspector |
-| `test:e2e` | Tag `@e2e` |
-| `test:p0` / `test:p1` | Priority-tagged runs |
-| `test:lor` | Tag `@lor` (Lord of the Rings test suite 😉) |
-| `test:report` | Open Playwright HTML report |
-| `test:report:ci` | Serve report on `0.0.0.0:9323` for CI |
-| `test:allure` | Generate + open Allure HTML |
-| `lint` / `lint:fix` | ESLint check / fix |
-| `typecheck` | `tsc --noEmit` |
-| `format` / `format:check` | Prettier |
-| `build` | `tsc` compile |
-| `clean` | Wipe reports, results, cache |
-
----
-
-## Path Aliases
-
-Defined in `tsconfig.json`:
-
-| Alias | Resolves to |
-|-------|------------|
-| `@api/*` | `src/api/*` |
-| `@config/*` | `src/config/*` |
-| `@fixtures/*` | `src/fixtures/*` |
-| `@pages/*` | `src/pages/*` |
-| `@testdata/*` | `src/testdata/*` |
-| `@tests/*` | `src/tests/*` |
-| `@utils/*` | `src/utils/*` |
-
-Example:
-```ts
-import logger from '@utils/logger';
-import { LoginPage } from '@pages/LoginPage';
-import { users } from '@testdata/users.json';
-```
-
----
-
-## Environment Configuration
-
-`.env` (root) — loaded by `dotenv` in `playwright.config.ts`.
-
-Supported keys:
-
-```dotenv
-TTA_ENV=qa                # qa | stg | prod | dev
-BASE_URL=                 # override everything if set
-QA_BASE_URL=https://app.thetestingacademy.com
-STG_BASE_URL=https://stage.thetestingacademy.com
-PROD_BASE_URL=https://app.thetestingacademy.com
-DEV_BASE_URL=http://localhost:3000
-LOG_LEVEL=info            # winston log level
-TEST_ENV=UAT              # shown in TTA report
-TEST_AUTHOR=Pramod
-```
-
-Switch env:
+### Step 5: Verify Setup
 ```bash
-TTA_ENV=stg npm test
+npm run typecheck
+npm run lint
+npm test -- --headed --max-workers=1
 ```
 
 ---
 
-## Test Tags & Filtering
+## Running Tests
 
-Tag your tests:
-
-```ts
-test('login with valid creds @p0 @smoke @e2e', async ({ page }) => { ... });
-```
-
-Filter:
-
+### All Tests
 ```bash
-npm run test:p0           # @p0 only
-npm run test:e2e          # @e2e only
-npx playwright test --grep "@smoke"
-npx playwright test --grep-invert "@flaky"
+npm test
+```
+
+### By Priority Tag
+```bash
+npm run smoke       # @smoke tests
+npm run regression  # @regression tests
+npm run sanity      # @sanity tests
+```
+
+### By Browser
+```bash
+npm run chrome      # Chromium only
+npm run firefox     # Firefox only
+npm run webkit      # WebKit (Safari) only
+```
+
+### Specific Spec File
+```bash
+npx playwright test src/tests/LoginPage.spec.ts
+npx playwright test src/tests/E2ETest.spec.ts
+```
+
+### With Browser Visible
+```bash
+npm run test:headed
+```
+
+### Debug Mode
+```bash
+npx playwright test --debug
+```
+
+### UI Mode (Interactive)
+```bash
+npx playwright test --ui
+```
+
+### With Environment Override
+```bash
+TEST_ENV=stg npm test
+TEST_ENV=prod npm test
 ```
 
 ---
 
-## Logging (Winston)
+## Configuration
 
-```ts
-import logger from '@utils/logger';
+### Environment Configuration (src/config/)
 
-logger.info('login start', { user: 'pramod' });
-logger.warn('slow API response', { ms: 3200 });
-logger.error('test failed', new Error('boom'));
-logger.debug('payload %o', { id: 1 });
-```
+Multiple environment files for different deployment targets:
 
-Output:
-- Console — colorized, timestamped
-- `logs/error.log` — errors only (JSON, 5MB rotation × 5)
-- `logs/combined.log` — everything (JSON, 5MB rotation × 5)
+| Environment | File | Base URL |
+|-------------|------|----------|
+| Development | `dev.env` | http://localhost:3000 |
+| QA | `qa.env` | https://app.thetestingacademy.com/playwright/ttacart/ |
+| Staging | `stg.env` | https://stage.thetestingacademy.com/playwright/ttacart/ |
+| Production | `prod.env` | https://app.thetestingacademy.com/playwright/ttacart/ |
 
-Scoped child loggers tag every line with their origin:
+### Playwright Configuration (playwright.config.ts)
 
-```ts
-import { createLogger } from '@utils/logger';
-
-const log = createLogger('LoginPage');
-log.info('loginAs standard_user');
-// 2026-06-02 08:10:23 [info] [LoginPage] loginAs standard_user
-```
-
----
-
-## Element Utilities (UtilElementLocator)
-
-**Concept:** `UtilElementLocator` is a thin wrapper around Playwright's `Locator` that exposes intent-revealing action helpers (`click`, `fill`, `getText`, `waitForVisible`, …) and accepts either a CSS string **or** a built `Locator` via the `Flex` type.
-
-**Why:** Page Objects shouldn't repeat `await page.locator(sel).click({ timeout })` everywhere. One wrapper centralises timeouts, logging, and the string-or-Locator ambiguity.
-
-**Q&A — why use this?**
-- **Q: Why the `Flex = string | Locator` type?** A: Call sites pass `'[data-test="username"]'` *or* `page.getByTestId('username')` — the wrapper normalises both via `toLocator()`.
-- **Q: Where do the debug logs come from?** A: Each instance owns a scoped Winston logger (`createLogger(scope)`); actions like `click`/`fill` emit a `debug` line.
-- **Q: Why keep a `type()` method when Playwright deprecated `.type()`?** A: It maps to `pressSequentially()` under the hood but keeps a name students recognise.
-
-```mermaid
-flowchart TD
-    A["target: Flex (string | Locator)"] --> B{typeof string?}
-    B -->|Yes| C["page.locator&#40;target&#41;"]
-    B -->|No| D[use Locator as-is]
-    C --> E[action: click / fill / getText ...]
-    D --> E
-    E --> F[log.debug + Playwright call]
-```
-
-```ts
-import { UtilElementLocator } from '@utils/UtilElementLocator';
-
-const el = new UtilElementLocator(page, 'LoginPage');
-await el.fill('[data-test="username"]', 'standard_user');
-await el.click(page.getByTestId('login-button'));
-await el.waitForVisible('[data-test="inventory-container"]');
-```
-
----
-
-## Page Objects (BasePage)
-
-**Concept:** `BasePage` is the abstract parent for every Page Object. It wires up the three things each page needs — the `page` handle, an `el` (`UtilElementLocator`), and a scoped `log` — plus a `goto()` navigation helper.
-
-**Why:** Removes boilerplate from every page and guarantees consistent logging scope (the subclass name) and a single navigation pattern.
-
-**Q&A — why use this?**
-- **Q: What does the constructor's `scope` argument do?** A: It names the logger and the element-util instance, so logs read `[LoginPage] …`.
-- **Q: Does BasePage pre-build any locators?** A: No — subclasses declare their own `private readonly` Locator fields. Base stays intentionally thin.
-- **Q: Why is `goto()` protected?** A: Navigation is an internal detail; pages expose intent methods like `open()` instead.
-
-```mermaid
-classDiagram
-    class BasePage {
-        #page: Page
-        #el: UtilElementLocator
-        #log: Logger
-        #goto(path) Promise
+Key settings:
+```typescript
+{
+    testDir: './src/tests',
+    fullyParallel: false,
+    retries: isCI ? 2 : 0,
+    workers: 2,
+    reporter: [
+        ['./src/utils/CustomReporter.ts'],    // Custom TTA reporter
+        ['html', { outputFolder: 'playwright-report' }],
+        ['json', { outputFile: 'test-results/results.json' }],
+        ['junit', { outputFile: 'test-results/results.xml' }],
+        ['allure-playwright', { resultsDir: 'allure-results' }],
+        ['list']
+    ],
+    use: {
+        screenshot: 'only-on-failure',
+        video: 'retain-on-failure',
+        trace: 'retain-on-failure',
+        actionTimeout: 15000,
+        navigationTimeout: 30000
     }
-    class LoginPage {
-        +open() Promise
-        +loginAs(user, pass) Promise
-    }
-    BasePage <|-- LoginPage
+}
 ```
 
-```ts
-import { BasePage } from './BasePage';
+### TypeScript Configuration (tsconfig.json)
 
-export class LoginPage extends BasePage {
-    static readonly PATH = '/playwright/ttacart/index.html';
-    private readonly usernameInput = this.page.locator('[data-test="username"]');
-
-    constructor(page: Page) {
-        super(page, 'LoginPage');
-    }
-
-    async open(): Promise<void> {
-        await this.goto(LoginPage.PATH);
+```typescript
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "CommonJS",
+        "strict": true,
+        "moduleResolution": "Node16",
+        "resolveJsonModule": true
     }
 }
 ```
 
 ---
 
-## Test Data Factory (Faker)
+## Framework Components
 
-**Concept:** `DataGenerator` is a static factory over `@faker-js/faker` producing the data TTACart needs — login credentials, checkout customer info, and full user profiles.
+### Logger (src/utils/Logger.ts)
 
-**Why:** Hard-coded fixtures rot and collide. Random-but-typed data keeps tests independent and surfaces validation bugs.
+Winston-based logging with scoped child loggers:
 
-**Q&A — why use this?**
-- **Q: Why static methods?** A: No state to hold — call `DataGenerator.credentials()` without `new`.
-- **Q: What's `checkoutCustomer()` for?** A: The TTACart checkout step-one form needs `firstName`, `lastName`, `postalCode` — one call returns all three.
-- **Q: Which Faker version?** A: Pinned to **v8** (`@faker-js/faker@^8.4.1`) because it ships a CommonJS build — v9/v10 are ESM-only. v8 API: `faker.internet.userName()` (lowercase `username()` is v9+) and `faker.location.zipCode()` (v8 renamed `address` → `location`).
+```typescript
+import { createLogger } from '@utils/Logger';
 
-```mermaid
-mindmap
-  root((DataGenerator))
-    credentials
-      username
-      password
-    checkoutCustomer
-      firstName
-      lastName
-      postalCode
-    userProfile
-      email
-      fullName
-      phone
+// In page classes - logger is auto-created in BasePage
+this.logger.info('Action started');
+this.logger.warn('Potential issue');
+this.logger.error('Error occurred', error);
+this.logger.debug('Debug info', data);
 ```
 
-```ts
+**Output**: 
+- Console: Colorized, timestamped
+- `logs/combined.log`: All logs
+- `logs/error.log`: Error logs only
+
+### DataGenerator (src/utils/DataGenerator.ts)
+
+Faker-based test data factory:
+
+```typescript
 import { DataGenerator } from '@utils/DataGenerator';
 
-const { username, password } = DataGenerator.credentials();
-const customer = DataGenerator.checkoutCustomer();
-// { firstName: 'Jaylen', lastName: 'Hahn', postalCode: '90210' }
+const firstName = DataGenerator.getFirstName();
+const email = DataGenerator.getEmail();
+const zipCode = DataGenerator.getZipCode();
+const password = DataGenerator.getPassword();
 ```
+
+### CustomReporter (src/utils/CustomReporter.ts)
+
+Generates branded HTML reports with:
+- Real-time test progress
+- Per-test & per-step details
+- Embedded screenshots & videos
+- Test history tracking
+- Environment metadata
+
+Output: `tta-report/index.html`
 
 ---
 
-## Writing Tests — Steps + Logging
+## Writing Tests
 
-**Concept:** Wrap each logical action in `test.step('label', async () => {…})` and emit a scoped logger line inside it. The custom TTA reporter surfaces both — step titles **and** their console output.
+### Test Structure
 
-**Why:** Plain Page-Object calls don't appear as steps in the report. `CustomReporter` only records `step.category === 'test.step'`, and pipes test stdout into each step's console block.
+Follow the Arrange-Act-Assert pattern with clear steps:
 
-**Q&A — why use this?**
-- **Q: Why does the report show empty steps without this?** A: Without `test.step()`, there are no `test.step` categories for the reporter to capture.
-- **Q: Where do per-step logs come from?** A: `associateLogsWithSteps` matches test stdout (your `log.info(...)`) to steps by title and order.
-- **Q: Do I still get the assertion?** A: Yes — `expect()` lives inside its own step, so a failure pins to that step.
+```typescript
+import { test } from "@fixtures/pages.fixture";
+import { faker } from "@faker-js/faker";
+import { env } from "../config/env";
 
-```mermaid
-sequenceDiagram
-    participant T as test.step
-    participant R as CustomReporter
-    T->>R: onStepBegin (category=test.step)
-    T->>T: log.info(...) → stdout
-    T->>R: onStepEnd (title, duration, status)
-    R->>R: associateLogsWithSteps(stdout)
-    R-->>R: render step + console block in HTML
-```
+test.describe("Login Functionality Tests", () => {
 
-```ts
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '@pages/LoginPage';
-import { createLogger } from '@utils/logger';
-
-const log = createLogger('login.spec');
-
-test('logs in with valid credentials @p0', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await test.step('Open the TTACart login page', async () => {
-        log.info('Opening the TTACart login page');
-        await loginPage.open();
+    test.beforeEach(async ({ loginPage }) => {
+        await loginPage.navigateToApplication();
     });
-    await test.step('Login as standard_user', async () => {
-        log.info('Logging in as standard_user');
-        await loginPage.loginAs('standard_user', 'tta_secret');
+
+    test("Verify user can login with valid credentials @p0 @smoke", async ({ loginPage }) => {
+        // Arrange
+        await loginPage.verifyLoginPageIsDisplayed();
+        
+        // Act
+        await loginPage.loginToApplication(env.username, env.password);
+        
+        // Assert
+        await loginPage.verifyLoginSuccessfullyWithValidCredentials();
     });
-    await test.step('Verify login form is hidden', async () => {
-        await expect(page.locator('[data-test="login-button"]')).toBeHidden();
+
+    test("Verify error message on invalid credentials @p1", async ({ loginPage }) => {
+        await loginPage.loginToApplication("invalid", "wrong");
+        await loginPage.verifyErrorMessage("Username and password do not match");
     });
 });
 ```
 
----
+### End-to-End Example
 
-## Fixtures (Page Object injection)
-
-**Concept:** `src/fixtures/test-base.ts` extends Playwright's `test` so every Page Object is available as a fixture. Ask for `cartPage` in the test args and it's handed over already constructed against the test's `page`.
-
-**Why:** Removes `new XPage(page)` boilerplate from every spec and gives each test a fresh, isolated instance.
-
-**Q&A — why use this?**
-- **Q: Why not just `new LoginPage(page)`?** A: You can — but the fixture centralises construction so a constructor change touches one file, not every spec.
-- **Q: Are pages opened for me?** A: No — fixtures hand over *constructed* (not *opened*) objects. Flows reach pages in different orders, so each spec calls `.open()` itself.
-- **Q: What about credentials?** A: They come from `@config/credentials`, which reads `.env` (see [Environment Configuration](#environment-configuration)).
-
-```ts
-import { test, expect } from '@fixtures/test-base';
-
-test('add to cart', async ({ inventoryPage, cartPage }) => {
-    await inventoryPage.open();
-    await inventoryPage.addToCart('tta-bike-light');
-    await cartPage.open();
-    expect(await cartPage.rowCount()).toBe(1);
-});
-```
-
----
-
-## Per-Step Screenshots (visualStep)
-
-**Concept:** `visualStep(page, title, fn)` wraps `test.step`, runs the step, then grabs a screenshot and attaches it as `step-<index>-<slug>` — the exact name the `CustomReporter` maps back to that step. Result: one image per step in the HTML report.
-
-**Why:** Playwright's built-in `screenshot: 'only-on-failure'` captures a single frame at the failure point. `visualStep` gives a visual trail of *every* step, pass or fail — great for demos and debugging.
-
-**Q&A — why use this?**
-- **Q: How does the reporter know which screenshot belongs to which step?** A: By the attachment name `step-N-...`; the steps run sequentially so `N` matches the reporter's own step index.
-- **Q: Does it slow tests down?** A: A little — one screenshot per step. Use it on showcase/e2e specs, not every micro-test.
-- **Q: When is the shot taken?** A: At the *end* of the step, so it shows the resulting state.
-
-```ts
-import { visualStep } from '@utils/visualStep';
-
-await visualStep(page, 'Open the cart', async () => {
-    await cartPage.open();
-    expect(await cartPage.rowCount()).toBe(1);
-});
-```
-
----
-
-## End-to-End Checkout Flow
-
-**Concept:** `src/tests/e2e-checkout.spec.ts` is the flagship test — log in → inventory → add item → cart → checkout step one → step two → order complete, each as a logged, screenshotted step driven entirely through Page Objects.
-
-**Why:** Proves the whole stack (fixtures + Page Objects + DataGenerator + logger + reporter) works together against the live TTACart app.
-
-**Q&A — why use this?**
-- **Q: Where do the customer details come from?** A: `DataGenerator.checkoutCustomer()` — random first/last name + postal code per run.
-- **Q: How is "order complete" verified?** A: `CheckoutCompletePage.assertOrderComplete()` checks the URL and the "Thank you for your order!" header.
-- **Q: Why `@P0 @Regression` in the describe title?** A: Tags drive filtered runs (`npm run test:p0`) and show up as labels in the Allure report.
-
-```mermaid
-flowchart LR
-    L[Login] --> I[Inventory] --> A[Add item] --> C[Cart]
-    C --> S1[Checkout step 1<br/>guest details]
-    S1 --> S2[Checkout step 2<br/>overview]
-    S2 --> D[Order complete ✅]
-```
-
-```ts
-test('should complete checkout successfully', async ({
-    inventoryPage, cartPage, checkoutStepOnePage, checkoutStepTwoPage, checkoutCompletePage, page,
+```typescript
+test("Verify user can complete checkout successfully @e2e", async ({
+    page,
+    loginPage,
+    inventoryPage,
+    cartPage,
+    checkoutStepOnePage,
+    checkoutStepTwoPage,
+    checkoutCompletePage
 }) => {
-    const customer = DataGenerator.checkoutCustomer();
-    await visualStep(page, 'Go to the inventory page', async () => inventoryPage.open());
-    await visualStep(page, 'Add one item to the cart', async () => inventoryPage.addToCart(FIRST_ITEM_ID));
-    await visualStep(page, 'Open the cart', async () => {
-        await cartPage.open();
-        expect(await cartPage.rowCount()).toBe(1);
-    });
-    await visualStep(page, 'Fill guest details (checkout step one)', async () => {
-        await cartPage.checkout();
-        await checkoutStepOnePage.fillGuest(customer);
-        await checkoutStepOnePage.continue();
-    });
-    await visualStep(page, 'Finish the order (checkout step two)', async () => checkoutStepTwoPage.finish());
-    await visualStep(page, 'Order is complete', async () => checkoutCompletePage.assertOrderComplete());
+    // Login
+    await loginPage.navigateToApplication();
+    await loginPage.loginToApplication(env.username, env.password);
+    await loginPage.verifyLoginSuccessfullyWithValidCredentials();
+
+    // Browse & Add to Cart
+    await inventoryPage.verifyInventoryPageIsDisplayed();
+    await inventoryPage.addProductToCart("tta-practice-backpack");
+    await inventoryPage.openCart();
+
+    // Cart
+    await cartPage.verifyUserIsLandedOnCartPageOrNot();
+    await cartPage.clickOnCheckoutButton();
+
+    // Checkout Step 1
+    await checkoutStepOnePage.verifyCheckoutStepOnePageIsDisplayed();
+    await checkoutStepOnePage.fillCheckoutInformation(
+        faker.person.firstName(),
+        faker.person.lastName(),
+        faker.location.zipCode()
+    );
+    await checkoutStepOnePage.clickOnContinueButton();
+
+    // Checkout Step 2
+    await checkoutStepTwoPage.verifyCheckoutStepTwoPageIsDisplayed();
+    await checkoutStepTwoPage.verifyFinishButtonIsEnabledOnCheckOutPageTwo();
+    await checkoutStepTwoPage.clickOnFinishButton();
+
+    // Order Complete
+    await checkoutCompletePage.verifyCheckoutCompletePageIsDisplayed();
+    await checkoutCompletePage.verifyStatusOfTheOrderIsCompletedOrNot();
 });
-```
-
----
-
-## Module System (CommonJS)
-
-**Concept:** The project is plain **CommonJS** — no `"type": "module"`, with tsconfig `module: Node16` / `moduleResolution: Node16`. Relative and path-alias imports are **extensionless**, the way most TS projects read.
-
-**Why:** Faker is pinned to v8 (which has a CommonJS build), so nothing forces the project to ESM. CommonJS keeps imports clean — no `.js` suffix gymnastics.
-
-**Q&A — why this setup?**
-- **Q: Do I add `.js` to imports?** A: No. `import { BasePage } from './BasePage'` — extensionless. (Under CommonJS, Node16 resolution adds the extension for you.)
-- **Q: Why keep `moduleResolution: Node16` instead of classic `node`?** A: Node16 reads package `exports` maps (needed for modern deps) and isn't deprecated in TypeScript 6+; classic `node` is.
-- **Q: What made this CommonJS rather than ESM?** A: Faker version. v8 = dual CJS/ESM → CommonJS works. v9/v10 are ESM-only and would force `"type": "module"` + `.js` extensions everywhere.
-
-```ts
-import { BasePage } from './BasePage';            // ✅ relative, no extension
-import { LoginPage } from '@pages/LoginPage';      // ✅ alias, no extension
-import { test } from '@playwright/test';           // ✅ package
 ```
 
 ---
 
 ## Reporting
 
-| Reporter | Output | Trigger |
+### Multi-Layer Reporting Strategy
+
+| Reporter | Output | Purpose |
 |----------|--------|---------|
-| Custom TTA | `tta-report/index.html` | auto every run |
-| Playwright HTML | `playwright-report/` | auto; `npm run test:report` |
-| JSON | `test-results/results.json` | auto |
-| Allure | `allure-results/` → `allure-report/` | `npm run test:allure` |
-| List (console) | stdout | auto |
+| **Custom TTA** | `tta-report/index.html` | Branded, real-time dashboard |
+| **Playwright** | `playwright-report/` | Detailed test traces & network logs |
+| **Allure** | `allure-report/` | Test metrics & trend analysis |
+| **JUnit XML** | `test-results/results.xml` | CI/CD integration |
+| **JSON** | `test-results/results.json` | Programmatic analysis |
 
-**Artifacts captured** (configured in `playwright.config.ts`):
+### Viewing Reports
 
-| Artifact | Setting | When |
-|----------|---------|------|
-| Screenshot (failure) | `screenshot: 'only-on-failure'` | on any failure |
-| Per-step screenshots | `visualStep()` helper | every step (see [visualStep](#per-step-screenshots-visualstep)) |
-| Video | `video: 'on'` | **always** recorded |
-| Trace | `trace: 'on-first-retry'` | on retry |
+```bash
+# Custom TTA Report
+open tta-report/index.html
 
-Allure is enriched with `environmentInfo` (env, baseURL, Node, OS, CI) and failure `categories`.
+# Playwright HTML
+npm run report
 
----
+# Allure Report
+npm run allure:generate
+npm run allure:open
 
-## Custom TTA Report — Visual Flow
-
-The custom `CustomReporter.ts` produces a branded, real-time HTML report at
-`tta-report/report_<timestamp>.html`. For the end-to-end checkout test it shows
-the **whole journey** — every step with its console log, its own screenshot, and
-the run video.
-
-**Overview** — stats dashboard, environment bar, and the filterable test table:
-
-![TTA report overview](docs/images/tta-report-overview.png)
-
-**End-to-end flow** — expand the test row: each of the 6 steps shows its log
-line and a screenshot, followed by the screenshots gallery and the run video:
-
-![TTA report — e2e checkout flow](docs/images/tta-report-e2e-flow.png)
+# Allure Live Server
+npm run allure:serve
+```
 
 ---
 
-## AI Agent Rules
+## CI/CD Integration
 
-This repo ships rules for every major AI coding assistant:
+### Jenkins Pipeline
 
-| Tool | File |
-|------|------|
-| Claude Code | [`CLAUDE.md`](./CLAUDE.md) |
-| GitHub Copilot | [`.github/copilot-instructions.md`](./.github/copilot-instructions.md) |
-| Cursor | [`.cursorrules`](./.cursorrules), [`.cursor/rules/`](./.cursor/rules/) |
-| Windsurf | [`.windsurfrules`](./.windsurfrules), [`.windsurf/rules/`](./.windsurf/rules/) |
-| Augment Code | [`.augment-guidelines`](./.augment-guidelines), [`.augment/rules/`](./.augment/rules/) |
-| Antigravity / Codex / Aider / Jules | [`AGENTS.md`](./AGENTS.md) |
+**Jenkinsfile** - Automated test execution stages:
 
-All enforce the same rule: **`npm run typecheck && npm run lint`** after every test change.
+1. **Checkout**: Clone from GitHub
+2. **Environment**: Display Node/npm versions
+3. **Install Dependencies**: `npm ci`
+4. **Run Tests**: `npm run ci:all`
+5. **Publish Results**: JUnit reports to dashboard
+6. **Archive Artifacts**: Reports for download
+
+#### Jenkins Parameters
+- **TEST_ENV**: Environment (qa, stg, dev, prod)
+- **BRANCH_NAME**: Git branch (default: master)
+
+### GitHub Actions Workflow
+
+**`.github/workflows/playwright.yml`**
+
+Triggers on:
+- Push to main/master
+- Pull requests to main/master
+
+Steps:
+1. Checkout code
+2. Setup Node.js (LTS)
+3. Install dependencies
+4. Install Playwright browsers
+5. Run tests
+6. Upload artifacts (30-day retention)
 
 ---
 
-## Project Rules
+## Best Practices
 
-Canonical source: [`rules/`](./rules/).
+### Page Object Design
+```typescript
+// ✅ Good
+async addProductToCart(productId: string): Promise<void> {
+    await this.locatorUtil.click(
+        this.getAddToCartButton(productId),
+        'Add to Cart Button'
+    );
+    this.logger.info(`Added product ${productId} to cart`);
+}
 
-| Rule | When it applies |
-|------|-----------------|
-| [test-quality-checks.md](./rules/test-quality-checks.md) | Any change under `src/tests/**` |
+// ❌ Avoid
+async click_button(id) {
+    this.page.click(`button[data-test="${id}"]`);
+}
+```
+
+### Test Structure
+```typescript
+// ✅ Good - Clear arrangement
+test('User can checkout successfully', async ({ page, loginPage, cartPage }) => {
+    // Arrange
+    await loginPage.navigateToApplication();
+    
+    // Act
+    await loginPage.loginToApplication(user, pass);
+    
+    // Assert
+    await cartPage.verifyLoggedIn();
+});
+```
+
+### Locator Selection
+```typescript
+// ✅ Best - Use data-testid
+private readonly deleteButton = this.page.locator('[data-testid="delete"]');
+
+// ✅ Good - Use XPath for complex elements
+private readonly title = this.page.locator('//h1[@class="title"]');
+
+// ❌ Avoid - Too generic
+private readonly button = this.page.locator('button');
+```
+
+### Waits & Timeouts
+```typescript
+// ✅ Good
+async clickCheckout(): Promise<void> {
+    await this.locatorUtil.waitForVisible(this.checkoutButton);
+    await this.locatorUtil.click(this.checkoutButton, 'Checkout');
+    await this.locatorUtil.waitForPageLoad();
+}
+
+// ❌ Avoid
+await page.waitForTimeout(2000);
+await page.click('button');
+```
+
+### Code Quality Checks
+```bash
+# Before committing
+npm run lint:fix       # Fix linting issues
+npm run format         # Format code
+npm run typecheck      # Check types
+npm test -- --max-workers=1  # Run tests
+```
 
 ---
 
-## Phase 1 Walkthrough
+## Troubleshooting
 
-Full prompt-by-prompt build log for Phase 1 lives at [`docs/phase1/prompts.md`](./docs/phase1/prompts.md). Replay every step to recreate the framework from scratch.
+### Tests Timeout
+**Problem**: Tests hang or timeout
+**Solution**:
+```bash
+# Check LocatorUtil.ts DEFAULT_ACTION_TIMEOUT_MS
+# Increase if slow environment: 15000ms → 30000ms
+# Check network logs in Playwright HTML report
+```
+
+### Flaky Tests
+**Problem**: Tests pass sometimes, fail other times
+**Solution**:
+```typescript
+// ❌ Avoid hard waits
+await page.waitForTimeout(3000);
+
+// ✅ Use conditions instead
+await locatorUtil.waitForVisible(element);
+await locatorUtil.waitForPageLoad();
+```
+
+### Report Not Generated
+**Problem**: `tta-report/` folder empty
+**Solution**:
+```bash
+# 1. Verify CustomReporter in playwright.config.ts
+# 2. Check test execution completed
+# 3. Verify write permissions: chmod 755 tta-report/
+```
+
+### Playwright Browsers Not Found
+```bash
+# Reinstall browsers
+npx playwright install --with-deps
+
+# Specific browser
+npx playwright install chromium --with-deps
+```
+
+### Environment Variable Issues
+```bash
+# Verify .env file
+ls -la src/config/*.env
+
+# Override environment
+TEST_ENV=stg npm test
+APP_URL=http://localhost:3000 npm test
+```
+
+---
+
+## npm Scripts Reference
+
+```json
+{
+  "test": "npx playwright test",
+  "e2e": "npx playwright test src/tests/E2ETest.spec.ts",
+  "install:browsers": "npx playwright install",
+  "ci:all": "npm run install:browsers && npm run test",
+  "ci:e2e": "npm run install:browsers && npm run e2e",
+  "test:headed": "npx playwright test --headed",
+  "smoke": "npx playwright test --grep @smoke",
+  "regression": "npx playwright test --grep @regression",
+  "sanity": "npx playwright test --grep @sanity",
+  "chrome": "npx playwright test --project=chromium",
+  "firefox": "npx playwright test --project=firefox",
+  "webkit": "npx playwright test --project=webkit",
+  "report": "npx playwright show-report",
+  "allure:generate": "allure generate allure-results --clean -o allure-report",
+  "allure:open": "allure open allure-report",
+  "allure:serve": "allure serve allure-results",
+  "lint": "npx eslint . --ext .ts,.tsx",
+  "lint:fix": "npx eslint . --ext .ts,.tsx --fix",
+  "typecheck": "npx tsc --noEmit",
+  "format": "npx prettier --write \"**/*.{ts,tsx,js,json,md}\"",
+  "format:check": "npx prettier --check \"**/*.{ts,tsx,js,json,md}\"",
+  "build": "npx tsc",
+  "clean": "npx rimraf playwright-report test-results allure-results allure-report"
+}
+```
+
+---
+
+## Test Coverage
+
+| Module | Tests | Status |
+|--------|-------|--------|
+| Login | 3 | ✅ |
+| Inventory | 3 | ✅ |
+| Cart | 5 | ✅ |
+| Checkout Step 1 | 3 | ✅ |
+| Checkout Step 2 | 3 | ✅ |
+| Checkout Complete | 3 | ✅ |
+| End-to-End Flow | 1 | ✅ |
+| **Total** | **21** | **✅** |
 
 ---
 
 ## Contributing
 
-1. Fork
-2. Branch (`git checkout -b feat/my-thing`)
-3. Add tests + `npm run typecheck && npm run lint`
-4. Commit + push
-5. Open PR
+1. Create feature branch: `git checkout -b feature/test-xyz`
+2. Write tests and page objects
+3. Run quality checks: `npm run lint && npm run typecheck`
+4. Commit: `git commit -m "feat: add tests for xyz"`
+5. Push and create PR
 
 ---
 
-## Author
+## Resources
 
-**Pramod Dutta** — Founder, [The Testing Academy](https://thetestingacademy.com)
+- 📖 [Playwright Documentation](https://playwright.dev/)
+- 🎓 [The Testing Academy](https://thetestingacademy.com/)
+- 📝 [Winston Logger](https://github.com/winstonjs/winston)
+- 🎲 [Faker.js](https://fakerjs.dev/)
+- 📊 [Allure Framework](https://docs.qameta.io/allure/)
 
-- YouTube: [@thetestingacademy](https://youtube.com/@thetestingacademy)
-- LinkedIn: [pramoddutta](https://www.linkedin.com/in/pramoddutta/)
-- Website: [thetestingacademy.com](https://thetestingacademy.com)
+---
+
+## Support
+
+- **GitHub Issues**: Report bugs or request features
+- **Website**: https://thetestingacademy.com/
+- **Email**: contact@thetestingacademy.com
 
 ---
 
 ## License
 
 ISC © Pramod Dutta / The Testing Academy
+
+---
+
+## Author
+
+**Built with ❤️ by [The Testing Academy](https://thetestingacademy.com/)**
+
+Framework created in 2026 | Maintained by QA Automation Team
+
+---
+
+<div align="center">
+
+### 🎭 Happy Testing!
+
+If this framework helped you, please consider giving it a ⭐
+
+</div>

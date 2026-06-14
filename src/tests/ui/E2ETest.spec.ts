@@ -1,6 +1,6 @@
-import { test } from "../fixtures/pages.fixture";
+import { test } from "../../fixtures/pages.fixture";
 import { faker } from "@faker-js/faker";
-import { env } from "../config/env";
+import { env } from "../../config/env";
 
 test.describe("End to End Test", () => {
 
