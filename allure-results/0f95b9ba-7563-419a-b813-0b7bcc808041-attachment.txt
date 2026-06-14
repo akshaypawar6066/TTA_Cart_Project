@@ -1,9 +1,0 @@
-2026-06-12 11:38:20 [info] [LoginPage] Navigating to the application: https://app.thetestingacademy.com/playwright/ttacart/
-2026-06-12 11:38:21 [info] [LoginPage] Waiting for DOM content loaded
-2026-06-12 11:38:21 [info] [LoginPage] Waiting for page to fully load
-2026-06-12 11:38:21 [info] [LoginPage] Asserting element is visible
-2026-06-12 11:38:21 [info] [LoginPage] Asserting page title is: TTACart - Login
-2026-06-12 11:38:21 [info] [LoginPage] Filling element with value: invalid_user
-2026-06-12 11:38:21 [info] [LoginPage] Filling element with value: wrong_password
-2026-06-12 11:38:21 [info] [LoginPage] Clicking on element
-2026-06-12 11:38:21 [info] [LoginPage] Asserting element contains text: Username and password do not match

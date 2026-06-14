@@ -1,5 +1,0 @@
-2026-06-12 11:05:46 [info] [LoginPage] Navigating to the application: https://app.thetestingacademy.com/playwright/ttacart/
-2026-06-12 11:05:47 [info] [LoginPage] Waiting for DOM content loaded
-2026-06-12 11:05:47 [info] [LoginPage] Waiting for page to fully load
-2026-06-12 11:05:47 [info] [LoginPage] Asserting element is visible
-2026-06-12 11:05:47 [info] [LoginPage] Asserting page title is: TTACart

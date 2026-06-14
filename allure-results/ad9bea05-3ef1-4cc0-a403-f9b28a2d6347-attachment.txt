@@ -1,1 +1,0 @@
-2026-06-14 08:41:45 [info] [LoginPage] Navigating to the application: https://app.thetestingacademy.com/playwright/ttacart/

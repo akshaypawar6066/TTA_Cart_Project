@@ -1,6 +1,0 @@
-2026-06-12 19:09:00 [info] [LoginPage] Navigating to the application: https://app.thetestingacademy.com/playwright/ttacart/
-2026-06-12 19:09:01 [info] [LoginPage] Waiting for DOM content loaded
-2026-06-12 19:09:01 [info] [LoginPage] Waiting for page to fully load
-2026-06-12 19:09:01 [info] [LoginPage] Filling element with value: visual_user
-2026-06-12 19:09:01 [info] [LoginPage] Filling element with value: tta_secret
-2026-06-12 19:09:01 [info] [LoginPage] Clicking on element

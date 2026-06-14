@@ -1,1 +1,0 @@
-2026-06-13 19:46:32 [info] [LoginPage] Navigating to the application: /playwright/ttacart/
