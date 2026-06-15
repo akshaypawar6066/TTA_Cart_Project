@@ -1,3 +1,4 @@
+
 /**
  * Custom TTA Reporter for Playwright
  * @author Pramod Dutta
@@ -95,7 +96,7 @@ class CustomTTAReporter implements Reporter {
         console.log('╠════════════════════════════════════════════════════════════════╣');
         console.log(`║  📅 Started: ${this.startTime.toLocaleString().padEnd(47)}║`);
         console.log(`║  📊 Total Tests: ${String(totalTests).padEnd(44)}║`);
-        console.log(`║  🌐 Environment: ${(process.env.TEST_ENV || 'UAT').padEnd(44)}║`);
+        console.log(`║  🌐 Environment: ${(process.env.TEST_ENV || 'qa').padEnd(44)}║`);
         console.log('╚════════════════════════════════════════════════════════════════╝\n');
 
         this.initializeLiveReport();
